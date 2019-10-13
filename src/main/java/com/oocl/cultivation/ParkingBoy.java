@@ -10,7 +10,12 @@ public class ParkingBoy {
     }
 
     public ParkingTicket park(Car car) {
-        return parkingLot.park(car);
+        ParkingTicket parkingTicket = parkingLot.park(car);
+
+        if(parkingTicket == null)
+            this.lastErrorMessage = "Not enough position.";
+
+        return parkingTicket;
     }
 
     public Car fetch(ParkingTicket ticket) {
@@ -20,8 +25,6 @@ public class ParkingBoy {
             this.lastErrorMessage = "Please provide your parking ticket.";
         else if(car == null)
             this.lastErrorMessage = "Unrecognized parking ticket.";
-        else
-            this.lastErrorMessage = "Not enough position.";
 
         return car;
     }
