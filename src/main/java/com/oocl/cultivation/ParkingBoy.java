@@ -14,10 +14,16 @@ public class ParkingBoy {
     }
 
     public Car fetch(ParkingTicket ticket) {
-        if(ticket == null)
-            return null;
+        Car car = parkingLot.fetch(ticket);
 
-        return parkingLot.fetch(ticket);
+        if(ticket == null)
+            this.lastErrorMessage = "Please provide your parking ticket.";
+        else if(car == null)
+            this.lastErrorMessage = "Unrecognized parking ticket.";
+        else
+            this.lastErrorMessage = "Not enough position.";
+
+        return car;
     }
 
     public String getLastErrorMessage() {
