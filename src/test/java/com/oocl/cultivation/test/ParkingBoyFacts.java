@@ -162,4 +162,31 @@ class ParkingBoyFacts {
         assertNull(overloadParkingTicket);
         assertSame(parkingBoy.getLastErrorMessage(), "Not enough position.");
     }
+
+    @Test
+    void should_successfully_add_to_parkingLotList() {
+        parkingBoy.addParkingLot(new ParkingLot());
+        parkingBoy.park(new Car());
+
+        assertSame(2, parkingBoy.getParkingLotList().size());
+    }
+
+    @Test
+    void should_add_cars_in_otherParkingLot_when_firstParkingLot_is_full() {
+        ParkingLot otherParkingLot = new ParkingLot();
+        parkingBoy.addParkingLot(otherParkingLot);
+
+        ParkingTicket parkingTicket = null;
+        for(int i=0; i<10; i++){
+            parkingTicket = parkingBoy.park(new Car());
+        }
+
+        ParkingTicket otherParkingTicket = parkingBoy.park(new Car());
+
+        int parkingLotAvail = parkingBoy.getParkingLotAtIndex(0).getAvailableParkingPosition();
+        int otherParkingLotAvail = parkingBoy.getParkingLotAtIndex(1).getAvailableParkingPosition();
+
+        assertSame(parkingLotAvail, 10);
+        assertSame(otherParkingLotAvail, 1);
+    }
 }
