@@ -1,9 +1,6 @@
 package com.oocl.cultivation.test;
 
-import com.oocl.cultivation.Car;
-import com.oocl.cultivation.ParkingBoy;
-import com.oocl.cultivation.ParkingLot;
-import com.oocl.cultivation.ParkingTicket;
+import com.oocl.cultivation.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -188,5 +185,25 @@ class ParkingBoyFacts {
 
         assertSame(parkingLotAvail, 0);
         assertSame(otherParkingLotAvail, 9);
+    }
+
+    @Test
+    void should_assert_SmartParkingBoy() {
+        SmartParkingBoy smartParkingBoy = new SmartParkingBoy(parkingLot);
+        ParkingLot otherParkingLot = new ParkingLot();
+        smartParkingBoy.addParkingLot(otherParkingLot);
+
+        ParkingTicket parkingTicket = null;
+        for(int i=0; i<10; i++){
+            parkingTicket = smartParkingBoy.park(new Car());
+        }
+
+        ParkingTicket otherParkingTicket = smartParkingBoy.park(new Car());
+
+        int parkingLotAvail = smartParkingBoy.getParkingLotAtIndex(0).getAvailableParkingPosition();
+        int otherParkingLotAvail = smartParkingBoy.getParkingLotAtIndex(1).getAvailableParkingPosition();
+
+        assertSame(parkingLotAvail, 4);
+        assertSame(otherParkingLotAvail, 5);
     }
 }

@@ -7,8 +7,8 @@ import java.util.List;
 
 public class ParkingBoy {
 
-    private List<ParkingLot> parkingLotList;
-    private String lastErrorMessage;
+    List<ParkingLot> parkingLotList;
+    String lastErrorMessage;
 
     public ParkingBoy(ParkingLot parkingLot) {
         this.parkingLotList = new ArrayList<>();
