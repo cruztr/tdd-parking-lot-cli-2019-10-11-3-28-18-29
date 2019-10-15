@@ -4,6 +4,9 @@ import jdk.nashorn.internal.runtime.arrays.ArrayLikeIterator;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+
+import static java.util.Objects.isNull;
 
 public class ParkingBoy {
 
@@ -48,19 +51,23 @@ public class ParkingBoy {
         if(parkingLotList.isEmpty())
             return null;
 
-        ParkingLot parkingLot = getFirstAvailableParkingLot();
-
-        if(parkingLot == null)
-            this.lastErrorMessage = "Not enough position.";
-
-        Car car = parkingLotList.get(0).fetch(ticket);
-
-        if(ticket == null)
+        if(ticket == null){
             this.lastErrorMessage = "Please provide your parking ticket.";
-        else if(car == null)
-            this.lastErrorMessage = "Unrecognized parking ticket.";
+            return null;
+        }
 
-        return car;
+        Car car = parkingLotList.stream()
+                .map(parkingLotInsideList -> parkingLotInsideList.fetch(ticket))
+                .filter(Objects::nonNull)
+                .findFirst()
+                .orElse(null);
+
+        if(!isNull(car)){
+            return car;
+        }
+
+        this.lastErrorMessage = "Unrecognized parking ticket.";
+        return null;
     }
 
     private ParkingLot getFirstAvailableParkingLot() {

@@ -188,7 +188,7 @@ class ParkingBoyFacts {
     }
 
     @Test
-    void should_assert_SmartParkingBoy() {
+    void should_assert_SmartParkingBoy_parks_in_lot_with_more_available_position() {
         SmartParkingBoy smartParkingBoy = new SmartParkingBoy(parkingLot);
         ParkingLot otherParkingLot = new ParkingLot();
         smartParkingBoy.addParkingLot(otherParkingLot);
@@ -202,6 +202,26 @@ class ParkingBoyFacts {
 
         int parkingLotAvail = smartParkingBoy.getParkingLotAtIndex(0).getAvailableParkingPosition();
         int otherParkingLotAvail = smartParkingBoy.getParkingLotAtIndex(1).getAvailableParkingPosition();
+
+        assertSame(parkingLotAvail, 4);
+        assertSame(otherParkingLotAvail, 5);
+    }
+
+    @Test
+    void should_assert_SuperSmartParkingBoy_parks_in_lot_with_more_available_position_rate() {
+        SuperSmartParkingBoy superSmartParkingBoy = new SuperSmartParkingBoy(parkingLot);
+        ParkingLot otherParkingLot = new ParkingLot();
+        superSmartParkingBoy.addParkingLot(otherParkingLot);
+
+        ParkingTicket parkingTicket = null;
+        for(int i=0; i<10; i++){
+            parkingTicket = superSmartParkingBoy.park(new Car());
+        }
+
+        ParkingTicket otherParkingTicket = superSmartParkingBoy.park(new Car());
+
+        int parkingLotAvail = superSmartParkingBoy.getParkingLotAtIndex(0).getAvailableParkingPosition();
+        int otherParkingLotAvail = superSmartParkingBoy.getParkingLotAtIndex(1).getAvailableParkingPosition();
 
         assertSame(parkingLotAvail, 4);
         assertSame(otherParkingLotAvail, 5);
