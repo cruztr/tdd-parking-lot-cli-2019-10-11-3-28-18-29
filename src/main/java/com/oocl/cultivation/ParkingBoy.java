@@ -32,8 +32,10 @@ public class ParkingBoy {
             return null;
 
         ParkingLot parkingLot = getFirstAvailableParkingLot();
-        if(parkingLot == null)
+        if(parkingLot == null) {
+            this.lastErrorMessage = "Not enough position.";
             return null;
+        }
 
         ParkingTicket parkingTicket = parkingLot.park(car);
         if(parkingTicket == null)
@@ -62,13 +64,10 @@ public class ParkingBoy {
     }
 
     private ParkingLot getFirstAvailableParkingLot() {
-        int index = 0;
-        do{
-            if(parkingLotList.get(index).getAvailableParkingPosition() > 0)
-                return parkingLotList.get(index);
-            index++;
-        } while (index < parkingLotList.size());
-        return null;
+        return parkingLotList.stream()
+                .filter(parkingLot -> parkingLot.getAvailableParkingPosition() != 0)
+                .findFirst()
+                .orElse(null);
     }
 
     public String getLastErrorMessage() {

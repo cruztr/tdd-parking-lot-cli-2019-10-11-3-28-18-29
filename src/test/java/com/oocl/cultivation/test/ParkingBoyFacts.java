@@ -186,7 +186,7 @@ class ParkingBoyFacts {
         int parkingLotAvail = parkingBoy.getParkingLotAtIndex(0).getAvailableParkingPosition();
         int otherParkingLotAvail = parkingBoy.getParkingLotAtIndex(1).getAvailableParkingPosition();
 
-        assertSame(parkingLotAvail, 10);
-        assertSame(otherParkingLotAvail, 1);
+        assertSame(parkingLotAvail, 0);
+        assertSame(otherParkingLotAvail, 9);
     }
 }
